@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        .title {
+            font-size: 3vh;
+            text-align: center;
+        }
+
+        button {
+            border-radius: 10px;
+            background-color: lightblue;
+            margin-right: 5px;
+            text-align: center;
+        }
+
+        #input {
+            width: 40vw;
+            height: 14vh;
+        }
+
+        #text {
+            text-align: center;
+        }
+
+        .flex-container {
+            margin: 0 auto;
+            display: flex;
+            text-align: center;
+            justify-content: space-between;
+            width: 30vw;
+        }
+    </style>
+</head>
+<body>
+<div class="title">Case Converter</div>
+<div id="text">
+    <textarea id="input"></textarea>
+</div>
+<br><br>
+<div class="flex-container">
+    <button id="upper-case">Upper Case</button>
+    <button id="lower-case">Lower Case</button>
+    <button id="proper-case">Proper Case</button>
+    <button id="sentence-case">Sentence Case</button>
+    <button id="save-text">Save Text File</button>
+</div>
+</body>
+<script>
+    document.getElementById("upper-case").onclick = (() => {
+        document.getElementById("input").value = document.getElementById("input").value.toUpperCase();
+    });
+    document.getElementById("lower-case").onclick = (() => {
+        document.getElementById("input").value = document.getElementById("input").value.toLowerCase();
+    });
+    document.getElementById("proper-case").onclick = (() => {
+        let words = document.getElementById("input").value.toLowerCase().split(' ');
+        const properCaseWords = words.map((word)=>{
+            return word.charAt(0).toUpperCase() + word.substring(1);
+        });
+        document.getElementById("input").value = properCaseWords.join(" ");
+    });
+    document.getElementById("sentence-case").onclick = (() => {
+        let words = document.getElementById("input").value.toLowerCase().split('. ');
+        const properCaseWords = words.map((word)=>{
+            return word.charAt(0).toUpperCase() + word.substring(1);
+        });
+        document.getElementById("input").value = properCaseWords.join(". ");
+    });
+    document.getElementById("save-text").onclick = (() => {
+        let text = document.getElementById("input").value;
+        let element = document.createElement('a');
+        element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+        element.setAttribute('download', "text.txt");
+
+        element.style.display = 'none';
+        document.body.appendChild(element);
+
+        element.click();
+
+        document.body.removeChild(element);
+    });
+</script>
+</html>
